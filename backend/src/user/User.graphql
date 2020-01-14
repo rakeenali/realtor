@@ -1,0 +1,44 @@
+# import * from "./flat/Flat.graphql"
+
+type RefreshToken {
+  token: String
+  expTime: Int
+}
+
+type User {
+  _id: String!
+  firstName: String!
+  lastName: String!
+  role: String!
+  password: String
+  email: String!
+  refreshToken: RefreshToken
+  bidsMade: [Bid!]
+  flatsPosted: [Flat!]
+}
+
+type Authorization {
+  accessToken: String!
+  refreshToken: String!
+}
+
+type Message {
+  message: String!
+}
+
+input UserInput {
+  firstName: String!
+  lastName: String!
+  password: String!
+  email: String!
+}
+
+type Query {
+  profile: User!
+}
+
+type Mutation {
+  login(email: String!, password: String!): Authorization!
+  createUser(input: UserInput): Message!
+  refreshLogin(refreshToken: String!): Authorization!
+}

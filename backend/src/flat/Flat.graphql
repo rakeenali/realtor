@@ -1,0 +1,37 @@
+# import * from "./user/User.graphql"
+
+type Bid {
+  _id: String!
+  amount: Int!
+  bidBy: User
+  onFlat: Flat
+}
+
+type Flat {
+  _id: String!
+  createdAt: String!
+  rooms: Int!
+  flatImage: String!
+  area: Int!
+  flatAddress: String!
+  createdBy: User!
+  bidsMade: [Bid!]!
+}
+
+input FlatInput {
+  rooms: Int!
+  flatImage: String!
+  area: Int!
+  flatAddress: String!
+}
+
+type Query {
+  flats: [Flat!]
+}
+
+type Mutation {
+  createFlat(input: FlatInput): Flat!
+  placeABid(flatId: String!, bidAmount: Int): Bid!
+  retractABid(bidId: String!): Message!
+  removeFlat(flatId: String!): Message!
+}
