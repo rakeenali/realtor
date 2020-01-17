@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, StyleSheet, StatusBar, TouchableOpacity } from 'react-native'
+import { Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { Icon, Grid, Row } from 'native-base'
 import { DrawerContentComponentProps } from 'react-navigation-drawer'
 
@@ -45,8 +45,7 @@ const Header: React.FC<IProps> = (props): JSX.Element => {
             onPress={() => {
               props.navigation.navigate(route.routeLink)
             }}
-            style={styles.center}
-          >
+            style={styles.center}>
             <Icon
               name={route.iconName}
               type={route.iconType}
@@ -59,43 +58,12 @@ const Header: React.FC<IProps> = (props): JSX.Element => {
               style={{
                 fontSize: 15,
                 color: activeIndex === i ? INPUT_CARD_BG : HEADER_COLOR,
-              }}
-            >
+              }}>
               {route.title}
             </Text>
           </TouchableOpacity>
         </Row>
       ))}
-      {/* <Row size={1} style={styles.center}>
-        <TouchableOpacity onPress={() => {}} style={styles.center}>
-          <Icon
-            name='home'
-            type='Feather'
-            style={{ fontSize: 35, color: HEADER_COLOR }}
-          />
-          <Text style={{ color: HEADER_COLOR, fontSize: 15 }}>Home</Text>
-        </TouchableOpacity>
-      </Row>
-      <Row size={1} style={styles.center}>
-        <TouchableOpacity onPress={() => {}} style={styles.center}>
-          <Icon
-            name='md-create'
-            type='Ionicons'
-            style={{ fontSize: 35, color: HEADER_COLOR }}
-          />
-          <Text style={{ color: HEADER_COLOR, fontSize: 15 }}>Flat</Text>
-        </TouchableOpacity>
-      </Row>
-      <Row size={1} style={styles.center}>
-        <TouchableOpacity onPress={() => {}} style={styles.center}>
-          <Icon
-            name='person'
-            type='Octicons'
-            style={{ fontSize: 35, color: HEADER_COLOR }}
-          />
-          <Text style={{ color: HEADER_COLOR, fontSize: 15 }}>Profile</Text>
-        </TouchableOpacity>
-      </Row> */}
     </Grid>
   )
 }

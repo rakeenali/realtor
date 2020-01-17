@@ -97,8 +97,7 @@ const Index = () => {
           justifyContent: 'center',
           alignItems: 'center',
           backgroundColor: APP_BG_COLOR,
-        }}
-      >
+        }}>
         <ActivityIndicator size={150} color={BUTTON_BG_COLOR} />
       </View>
     )

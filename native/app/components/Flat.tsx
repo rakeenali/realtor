@@ -1,14 +1,28 @@
 import React from 'react'
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 
+import { useAuthState } from '../store/Auth'
 import BidsModal from './BidsModal'
 import styles from '../styles/Flat'
 
-const Flat = () => {
+import { Flat as FlatType } from '../types/graphql'
+
+type IProps = {
+  flat: FlatType
+}
+
+const Flat: React.FC<IProps> = ({ flat }) => {
+  const authState = useAuthState()
+
   const [showModal, setShowModal] = React.useState<boolean>(false)
+
   return (
     <View style={styles.container}>
-      <BidsModal visibility={showModal} hideModal={() => setShowModal(false)} />
+      <BidsModal
+        visibility={showModal}
+        hideModal={() => setShowModal(false)}
+        bids={flat.bidsMade}
+      />
       <View style={styles.card}>
         <Image
           source={{
@@ -18,19 +32,29 @@ const Flat = () => {
           style={{ width: '100%', height: 200 }}
         />
         <View style={styles.cardInner}>
-          <Text style={styles.mainText}>Area: 350</Text>
-          <Text style={styles.text}>Info 1</Text>
-          <Text style={styles.text}>Info 2</Text>
+          <Text style={styles.mainText}>Area: {flat.area}</Text>
+          <Text style={styles.text}>Rooms: {flat.rooms}</Text>
+          <Text style={{ ...styles.text, fontSize: 18 }}>
+            Address: {flat.flatAddress}
+          </Text>
           <View style={styles.buttonContainer} />
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => setShowModal(true)}
-          >
-            <Text style={styles.buttonText}>Show Modal</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Remove Flate</Text>
-          </TouchableOpacity>
+          {flat.bidsMade.length > 0 && (
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => setShowModal(true)}>
+              <Text style={styles.buttonText}>Bids Made</Text>
+            </TouchableOpacity>
+          )}
+
+          {authState.userRole === 'realtor' ? (
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.buttonText}>Make a bid</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.buttonText}>Remove Flate</Text>
+            </TouchableOpacity>
+          )}
           <View style={{ marginVertical: 10 }}></View>
         </View>
       </View>

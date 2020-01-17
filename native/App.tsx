@@ -6,7 +6,7 @@ import { MessageProvider } from './app/store/Message'
 import { AuthProvider } from './app/store/Auth'
 
 const client = createClient({
-  url: 'http://caa216e0.ngrok.io/graphql',
+  url: 'http://cce016f1.ngrok.io/graphql',
 })
 
 const App = () => {

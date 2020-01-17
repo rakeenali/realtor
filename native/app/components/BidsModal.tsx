@@ -2,39 +2,34 @@ import React from 'react'
 import { View, Text, Modal, TouchableOpacity, ScrollView } from 'react-native'
 import { Icon } from 'native-base'
 
+import { Bid } from '../types/graphql'
 import styles from '../styles/BidsModal'
 
 type IProps = {
   visibility: boolean
   hideModal: Function
+  bids: Bid[]
 }
 
-const BidsModal: React.FC<IProps> = ({ visibility, hideModal }) => {
+const BidsModal: React.FC<IProps> = ({ visibility, hideModal, bids }) => {
   return (
     <Modal animationType='slide' transparent={false} visible={visibility}>
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.iconButton}
-            onPress={() => hideModal()}
-          >
+            onPress={() => hideModal()}>
             <Icon name='back' type='AntDesign' style={styles.icon} />
           </TouchableOpacity>
           <Text style={styles.headerText}>List of Bids</Text>
         </View>
         <ScrollView style={styles.modal}>
-          <View style={styles.card}>
-            <Text style={styles.cardText}>Amount: 200</Text>
-            <Text style={styles.cardText}>By: Rakeen Ali</Text>
-          </View>
-          <View style={styles.card}>
-            <Text style={styles.cardText}>Amount: 200</Text>
-            <Text style={styles.cardText}>By: Rakeen Ali</Text>
-          </View>
-          <View style={styles.card}>
-            <Text style={styles.cardText}>Amount: 200</Text>
-            <Text style={styles.cardText}>By: Rakeen Ali</Text>
-          </View>
+          {bids.map(bid => (
+            <View style={styles.card} key={bid._id}>
+              <Text style={styles.cardText}>Amount: {bid.amount}</Text>
+              <Text style={styles.cardText}>By: {bid.bidBy.email}</Text>
+            </View>
+          ))}
         </ScrollView>
       </View>
     </Modal>

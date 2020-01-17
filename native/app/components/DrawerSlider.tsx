@@ -6,6 +6,7 @@ import { DrawerContentComponentProps } from 'react-navigation-drawer'
 import { IDrawerType } from '../types'
 
 import { DRAWER_COLOR, DRAWER_WIDTH } from '../store/Theme'
+import { useAuthState, useAuthDispatch, logUserOut } from '../store/Auth'
 
 const styles = StyleSheet.create({
   box: {
@@ -43,7 +44,11 @@ type IProps = DrawerContentComponentProps & {
 }
 
 const DrawerSlider: React.FC<IProps> = (props): JSX.Element => {
+  const { isAuthenticated } = useAuthState()
+  const authDispatch = useAuthDispatch()
+
   const activeIndex = props.navigation.state.index
+
   return (
     <View style={styles.box}>
       <View style={styles.topNav}>
@@ -52,8 +57,7 @@ const DrawerSlider: React.FC<IProps> = (props): JSX.Element => {
             onPress={() => {
               props.navigation.navigate(route.routeLink)
             }}
-            key={i}
-          >
+            key={i}>
             <Icon
               style={{
                 ...styles.iconStyle,
@@ -66,13 +70,26 @@ const DrawerSlider: React.FC<IProps> = (props): JSX.Element => {
         ))}
       </View>
       <View style={styles.bottomNav}>
-        <TouchableOpacity onPress={() => console.log(1)}>
-          <Icon
-            style={styles.iconStyle}
-            name='hands-helping'
-            type='FontAwesome5'
-          />
-        </TouchableOpacity>
+        {isAuthenticated ? (
+          <TouchableOpacity
+            onPress={() => {
+              logUserOut(authDispatch)
+            }}>
+            <Icon
+              style={styles.iconStyle}
+              name='logout'
+              type='SimpleLineIcons'
+            />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity onPress={() => console.log(1)}>
+            <Icon
+              style={styles.iconStyle}
+              name='hands-helping'
+              type='FontAwesome5'
+            />
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   )
